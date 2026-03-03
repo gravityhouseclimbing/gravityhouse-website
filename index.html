@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gravity House — Indoor Climbing Gym | Bega Valley</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #141412; --surface: #1E1D1A; --surface2: #2A2925;
+    --chalk: #F2EDE4; --muted: #9A9080; --accent: #D96B2A;
+    --accent2: #6B8F4E; --border: rgba(242,237,228,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { background:var(--bg); color:var(--chalk); font-family:'Outfit',sans-serif; overflow-x:hidden; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; width:100%; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.2rem 3rem;
+    background:rgba(20,20,18,0.85); backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:1.6rem; letter-spacing:0.04em; color:var(--chalk); text-decoration:none; }
+  .nav-logo span { color:var(--accent); }
+  .nav-links { display:flex; gap:2.5rem; list-style:none; }
+  .nav-links a { color:var(--muted); text-decoration:none; font-size:0.9rem; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--chalk); }
+  .nav-cta { background:var(--accent); color:white; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-family:'Outfit',sans-serif; font-weight:600; font-size:0.85rem; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; }
+  .nav-cta:hover { background:#c05a1f; }
+
+  /* HERO */
+  .hero { min-height:100vh; display:flex; align-items:flex-end; position:relative; overflow:hidden; padding:0 3rem 6rem; }
+  .hero-bg {
+    position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(20,20,18,0.97) 0%, rgba(20,20,18,0.5) 50%, rgba(20,20,18,0.3) 100%),
+      repeating-linear-gradient(-45deg, rgba(217,107,42,0.03) 0px, rgba(217,107,42,0.03) 1px, transparent 1px, transparent 40px),
+      radial-gradient(ellipse at 70% 30%, rgba(107,143,78,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 70%, rgba(217,107,42,0.15) 0%, transparent 55%);
+  }
+  .hero-texture { position:absolute; inset:0; opacity:0.04; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E"); background-size:200px; }
+  .hold { position:absolute; border-radius:50%; opacity:0.15; }
+  .hold-1 { width:80px; height:60px; background:var(--accent); top:20%; right:15%; border-radius:40% 60% 50% 50%; transform:rotate(20deg); }
+  .hold-2 { width:50px; height:40px; background:var(--accent2); top:35%; right:25%; border-radius:50% 40% 60% 50%; transform:rotate(-15deg); }
+  .hold-3 { width:70px; height:55px; background:var(--chalk); top:55%; right:10%; border-radius:45% 55% 40% 60%; transform:rotate(5deg); }
+  .hold-4 { width:40px; height:35px; background:#4A7BC4; top:25%; right:35%; border-radius:60% 40% 55% 45%; transform:rotate(-30deg); }
+  .rope-svg { position:absolute; right:8%; top:0; bottom:0; width:3px; background:linear-gradient(to bottom, transparent, var(--accent) 20%, var(--accent) 80%, transparent); opacity:0.3; }
+  .hero-content { position:relative; z-index:2; max-width:900px; }
+  .hero-badge { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(217,107,42,0.15); border:1px solid rgba(217,107,42,0.3); color:var(--accent); padding:0.4rem 1rem; border-radius:100px; font-size:0.8rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.5rem; animation:fadeUp 0.6s ease both; }
+  .hero h1 { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(5rem,12vw,10rem); line-height:0.9; letter-spacing:-0.01em; text-transform:uppercase; animation:fadeUp 0.7s 0.1s ease both; }
+  .hero h1 .accent { color:var(--accent); display:block; }
+  .hero-sub { font-size:1.2rem; color:var(--muted); font-weight:400; max-width:520px; margin-top:1.5rem; line-height:1.6; animation:fadeUp 0.7s 0.2s ease both; }
+  .hero-ctas { display:flex; gap:1rem; margin-top:2.5rem; animation:fadeUp 0.7s 0.3s ease both; }
+  .btn-primary { background:var(--accent); color:white; border:none; padding:1rem 2rem; border-radius:4px; font-family:'Outfit',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; text-decoration:none; display:inline-block; }
+  .btn-primary:hover { background:#c05a1f; transform:translateY(-2px); }
+  .btn-ghost { background:transparent; color:var(--chalk); border:1px solid rgba(242,237,228,0.25); padding:1rem 2rem; border-radius:4px; font-family:'Outfit',sans-serif; font-weight:600; font-size:0.9rem; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; text-decoration:none; display:inline-block; }
+  .btn-ghost:hover { border-color:var(--chalk); transform:translateY(-2px); }
+  .hero-stats { display:flex; gap:3rem; margin-top:3.5rem; padding-top:2.5rem; border-top:1px solid var(--border); animation:fadeUp 0.7s 0.4s ease both; }
+  .stat-num { font-family:'Barlow Condensed',sans-serif; font-size:2.5rem; font-weight:900; color:var(--accent); line-height:1; }
+  .stat-label { font-size:0.8rem; color:var(--muted); font-weight:500; letter-spacing:0.05em; text-transform:uppercase; margin-top:0.3rem; }
+
+  /* SECTIONS */
+  section { padding:7rem 3rem; }
+  .section-tag { font-size:0.75rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; display:block; }
+  .section-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(2.5rem,5vw,4rem); text-transform:uppercase; line-height:1; }
+  .section-body { color:var(--muted); line-height:1.7; font-size:1.05rem; max-width:580px; margin-top:1rem; }
+
+  /* ACTIVITIES */
+  .activities { background:var(--surface); }
+  .activities-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5px; margin-top:4rem; border:1.5px solid var(--border); }
+  .activity-card { background:var(--bg); padding:2.5rem; transition:background 0.3s; position:relative; overflow:hidden; }
+  .activity-card::before { content:''; position:absolute; bottom:0; left:0; width:100%; height:3px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+  .activity-card:hover { background:var(--surface2); }
+  .activity-card:hover::before { transform:scaleX(1); }
+  .activity-icon { font-size:2.5rem; margin-bottom:1.5rem; display:block; }
+  .activity-card h3 { font-family:'Barlow Condensed',sans-serif; font-size:1.8rem; font-weight:700; text-transform:uppercase; margin-bottom:0.75rem; }
+  .activity-card p { color:var(--muted); line-height:1.6; font-size:0.95rem; }
+  .activity-badge { display:inline-block; margin-top:1.2rem; font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent2); border:1px solid rgba(107,143,78,0.3); padding:0.25rem 0.75rem; border-radius:100px; }
+
+  /* QUOTE */
+  .quote-section { background:var(--accent); display:grid; grid-template-columns:1fr 1fr; gap:0; min-height:400px; }
+  .quote-left { padding:5rem 4rem; display:flex; flex-direction:column; justify-content:center; }
+  .quote-mark { font-family:'Barlow Condensed',sans-serif; font-size:8rem; line-height:0.7; color:rgba(0,0,0,0.15); margin-bottom:0.5rem; }
+  .quote-text { font-family:'Barlow Condensed',sans-serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:700; text-transform:uppercase; line-height:1.1; color:white; margin-bottom:1.5rem; }
+  .quote-author { font-size:0.85rem; font-weight:600; color:rgba(255,255,255,0.7); letter-spacing:0.08em; text-transform:uppercase; }
+  .quote-right { background:var(--bg); display:flex; flex-direction:column; justify-content:center; padding:5rem 4rem; }
+  .quote-right .section-title { color:var(--chalk); margin-bottom:1rem; }
+  .quote-right p { color:var(--muted); line-height:1.7; margin-bottom:1.5rem; }
+
+  /* KIDS */
+  .kids-zone { background:var(--surface2); display:grid; grid-template-columns:1fr 1fr; gap:0; overflow:hidden; }
+  .kids-visual { background:linear-gradient(135deg,#4A7BC4 0%,var(--accent2) 50%,var(--accent) 100%); display:flex; align-items:center; justify-content:center; padding:5rem; position:relative; min-height:500px; }
+  .kids-shapes { position:absolute; inset:0; background:radial-gradient(circle at 30% 40%,rgba(255,255,255,0.1) 0%,transparent 40%),radial-gradient(circle at 70% 70%,rgba(255,255,255,0.08) 0%,transparent 35%); }
+  .kids-emoji { font-size:6rem; position:relative; z-index:1; text-align:center; line-height:1.4; }
+  .kids-content { padding:5rem 4rem; display:flex; flex-direction:column; justify-content:center; }
+  .kids-content .section-title { margin-bottom:1rem; }
+  .kids-content .section-title span { color:var(--accent); }
+
+  /* PRICING */
+  .pricing { background:var(--bg); }
+  .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin-top:4rem; }
+  .pricing-card { border:1px solid var(--border); border-radius:8px; padding:2.5rem; position:relative; overflow:hidden; transition:border-color 0.3s; }
+  .pricing-card:hover { border-color:rgba(217,107,42,0.4); }
+  .pricing-card.featured { border-color:var(--accent); background:rgba(217,107,42,0.05); }
+  .pricing-tag { position:absolute; top:1.2rem; right:1.2rem; background:var(--accent); color:white; font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.25rem 0.6rem; border-radius:100px; }
+  .pricing-card h3 { font-family:'Barlow Condensed',sans-serif; font-size:1.5rem; font-weight:700; text-transform:uppercase; margin-bottom:0.5rem; }
+  .pricing-price { font-family:'Barlow Condensed',sans-serif; font-size:3rem; font-weight:900; color:var(--accent); line-height:1; margin:1rem 0; }
+  .pricing-price sup { font-size:1.2rem; }
+  .pricing-period { font-size:0.85rem; color:var(--muted); font-weight:400; }
+  .pricing-features { list-style:none; margin-top:1.5rem; }
+  .pricing-features li { padding:0.5rem 0; border-bottom:1px solid var(--border); font-size:0.9rem; color:var(--muted); display:flex; align-items:center; gap:0.5rem; }
+  .pricing-features li::before { content:'✓'; color:var(--accent2); font-weight:700; }
+  .pricing-cta { margin-top:2rem; width:100%; }
+
+  /* MAP */
+  .map-section { background:var(--surface); text-align:center; }
+  .map-placeholder { margin:3rem auto; max-width:800px; height:400px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1rem; position:relative; overflow:hidden; }
+  .map-dots { position:absolute; inset:0; }
+  .dot { position:absolute; width:8px; height:8px; background:var(--accent); border-radius:50%; box-shadow:0 0 12px var(--accent); }
+  .dot::after { content:''; position:absolute; inset:-4px; border-radius:50%; border:1px solid var(--accent); opacity:0.4; animation:pulse 2s infinite; }
+  .map-label { position:relative; z-index:1; color:var(--muted); font-size:0.9rem; }
+  .map-label strong { display:block; font-size:1.5rem; color:var(--chalk); font-family:'Barlow Condensed',sans-serif; text-transform:uppercase; margin-bottom:0.5rem; }
+
+  /* NEWSLETTER */
+  .newsletter { background:var(--bg); text-align:center; border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:5rem 3rem; }
+  .newsletter .section-title { margin-bottom:0.5rem; }
+  .newsletter > p { color:var(--muted); margin-bottom:2rem; }
+  .substack-wrap { display:flex; justify-content:center; }
+  .substack-wrap iframe { border-radius:8px; max-width:100%; }
+
+  /* MODAL */
+  .modal-overlay { display:none; position:fixed; inset:0; z-index:999; background:rgba(10,10,8,0.88); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:1.5rem; }
+  .modal-overlay.open { display:flex; }
+  .modal-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:2.5rem 2.5rem 2rem; max-width:560px; width:100%; position:relative; text-align:center; }
+  .modal-close { position:absolute; top:1rem; right:1.2rem; background:none; border:none; color:var(--muted); font-size:1.8rem; cursor:pointer; line-height:1; transition:color 0.2s; }
+  .modal-close:hover { color:var(--chalk); }
+  .modal-box h3 { font-family:'Barlow Condensed',sans-serif; font-size:2.2rem; font-weight:900; text-transform:uppercase; margin-bottom:0.4rem; }
+  .modal-box > p { color:var(--muted); font-size:0.95rem; margin-bottom:1.5rem; }
+  .modal-box iframe { border-radius:6px; max-width:100%; }
+
+  /* FOOTER */
+  footer { background:var(--surface); padding:4rem 3rem 2rem; border-top:1px solid var(--border); }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; margin-bottom:3rem; }
+  .footer-logo { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:2rem; margin-bottom:1rem; text-decoration:none; color:var(--chalk); display:block; }
+  .footer-logo span { color:var(--accent); }
+  .footer-tagline { color:var(--muted); font-size:0.9rem; line-height:1.6; max-width:260px; }
+  .footer-col h4 { font-size:0.75rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:1.2rem; }
+  .footer-col ul { list-style:none; }
+  .footer-col li { margin-bottom:0.6rem; }
+  .footer-col a { color:var(--muted); text-decoration:none; font-size:0.9rem; transition:color 0.2s; }
+  .footer-col a:hover { color:var(--chalk); }
+  .footer-bottom { display:flex; justify-content:space-between; align-items:center; padding-top:2rem; border-top:1px solid var(--border); color:var(--muted); font-size:0.8rem; }
+  .social-links { display:flex; gap:1rem; }
+  .social-link { width:36px; height:36px; border-radius:4px; background:var(--surface2); display:flex; align-items:center; justify-content:center; color:var(--muted); text-decoration:none; font-size:0.9rem; transition:all 0.2s; }
+  .social-link:hover { background:var(--accent); color:white; }
+  .divider { height:1px; background:var(--border); margin:0; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes pulse { 0%,100% { transform:scale(1); opacity:0.4; } 50% { transform:scale(2); opacity:0; } }
+  .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  @media (max-width:900px) {
+    nav { padding:1rem 1.5rem; }
+    .nav-links { display:none; }
+    section { padding:4rem 1.5rem; }
+    .hero { padding:0 1.5rem 4rem; }
+    .hero-stats { gap:1.5rem; }
+    .quote-section, .kids-zone { grid-template-columns:1fr; }
+    .footer-grid { grid-template-columns:1fr 1fr; }
+    .footer-bottom { flex-direction:column; gap:1rem; text-align:center; }
+    .modal-box { padding:2rem 1.5rem 1.5rem; }
+  }
+
+  /* SPECIAL PRICING */
+  .special-pricing { margin-top:4rem; text-align:center; }
+  .special-title { font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:900; text-transform:uppercase; margin-bottom:2rem; color:var(--chalk); }
+  .special-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; max-width:800px; margin:0 auto; }
+  .special-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:2rem 1.5rem; transition:border-color 0.3s; }
+  .special-card:hover { border-color:rgba(217,107,42,0.4); }
+  .special-icon { font-size:2rem; display:block; margin-bottom:0.75rem; }
+  .special-name { font-family:'Barlow Condensed',sans-serif; font-size:1.4rem; font-weight:700; text-transform:uppercase; }
+  .special-sub { color:var(--muted); font-size:0.85rem; margin:0.2rem 0 0.75rem; }
+  .special-price { font-family:'Barlow Condensed',sans-serif; font-size:1.8rem; font-weight:900; color:var(--accent); }
+  .special-price span { font-size:1rem; font-weight:400; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span>G</span>RAVITY HOUSE</a>
+  <ul class="nav-links">
+    <li><a href="#activities">Activities</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#community">Community</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openModal()">Subscribe</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-texture"></div>
+  <div class="hold hold-1"></div>
+  <div class="hold hold-2"></div>
+  <div class="hold hold-3"></div>
+  <div class="hold hold-4"></div>
+  <div class="rope-svg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">📍 Kalaru, Bega Valley, NSW</div>
+    <h1>CLIMB UP.<br>GET FIT.<span class="accent">BELONG.</span></h1>
+    <p class="hero-sub">Bega Valley's first <em>indoor</em> climbing &amp; training gym for all ages and skill levels.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="openModal()">Join the Community</button>
+      <a class="btn-ghost" href="#activities">Explore the Gym</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">500+</div><div class="stat-label">Community Supporters</div></div>
+      <div><div class="stat-num">$75k</div><div class="stat-label">Funded by the Community</div></div>
+      <div><div class="stat-num">3</div><div class="stat-label">Stages of the Build</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section class="activities" id="activities">
+  <div class="reveal">
+    <span class="section-tag">What We Offer</span>
+    <h2 class="section-title">The Climb</h2>
+    <p class="section-body">Whether you're a first-time or seasoned climber, Gravity House has something for you. 300m² of best in class bouldering walls with different routes for all levels.</p>
+  </div>
+  <div class="activities-grid reveal">
+    <div class="activity-card">
+      <span class="activity-icon">🧗</span>
+      <h3>Bouldering</h3>
+      <p>No ropes, no fuss. Colour-graded problems from absolute beginner to advanced — including dedicated zones for every level. The heart of Gravity House.</p>
+      <span class="activity-badge">All levels welcome</span>
+    </div>
+    <div class="activity-card">
+      <span class="activity-icon">💪</span>
+      <h3>Training Area</h3>
+      <p>A functional fitness gym available for our members. Bike, rower, weights, bands, squat cage. Everything you need to build your strength and mobility.</p>
+      <span class="activity-badge">Members access</span>
+    </div>
+    <div class="activity-card">
+      <span class="activity-icon">🎨</span>
+      <h3>Kids Zone</h3>
+      <p>A colourful, dedicated space designed for young climbers to explore and play — while parents climb nearby. Fun, safe, and always moving.</p>
+      <span class="activity-badge">For kids under 8</span>
+    </div>
+    <div class="activity-card">
+      <span class="activity-icon">🏆</span>
+      <h3>Events &amp; Comps</h3>
+      <p>Community climb nights, youth competitions, workshops and more. The Bega Valley's climbing scene starts here.</p>
+      <span class="activity-badge">Regular events</span>
+    </div>
+    <div class="activity-card">
+      <span class="activity-icon">📚</span>
+      <h3>Coaching &amp; Classes</h3>
+      <p>Intro sessions for beginners, youth programs, and private coaching for those who want to progress with guidance.</p>
+      <span class="activity-badge">All ages</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUOTE / ABOUT -->
+<div class="quote-section" id="about">
+  <div class="quote-left">
+    <div class="quote-mark">"</div>
+    <p class="quote-text">It's going to be an inspirational place to grow your body, mind, and your social connection.</p>
+    <span class="quote-author">— Marc, Co-founder of Gravity House</span>
+  </div>
+  <div class="quote-right reveal">
+    <span class="section-tag">Our Story</span>
+    <h2 class="section-title">Born in the Valley</h2>
+    <p>It started simply: a Wallagoot dad took his two young kids to a bouldering gym and watched them light up. He looked around the Bega Valley and saw nothing like it — so he decided to build it.</p>
+    <p>Marc and co-founder Cyril set out to fill a real gap. Not just a gym, but a place where the whole community could come together — families, athletes, beginners, and kids — and find something that feels like surfing or mountain biking: exciting, accessible, and deeply social.</p>
+    <a class="btn-primary" href="#" style="margin-top:0.5rem;">Read the full story</a>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="reveal">
+    <span class="section-tag">Membership</span>
+    <h2 class="section-title">Find Your Pass</h2>
+    <p class="section-body">Simple, honest pricing. Full access to all equipment.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <h3>Day Pass</h3>
+      <div class="pricing-price"><sup>$</sup>25</div>
+      <span class="pricing-period">per visit</span>
+      <ul class="pricing-features">
+        <li>Full gym access</li>
+        <li>All bouldering areas</li>
+        <li>Training area included</li>
+        <li>Gear hire available</li>
+      </ul>
+    </div>
+    <div class="pricing-card featured">
+      <span class="pricing-tag">Popular</span>
+      <h3>Unlimited</h3>
+      <div class="pricing-price"><sup>$</sup>40</div>
+      <span class="pricing-period">per week</span>
+      <ul class="pricing-features">
+        <li>Unlimited gym access</li>
+        <li>All bouldering areas</li>
+        <li>Training area included</li>
+        <li>Member events &amp; comps</li>
+        <li>10% gear hire discount</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <h3>Annual</h3>
+      <div class="pricing-price"><sup>$</sup>1400</div>
+      <span class="pricing-period">per year</span>
+      <ul class="pricing-features">
+        <li>Unlimited gym access</li>
+        <li>All bouldering areas</li>
+        <li>Training area included</li>
+        <li>Priority event booking</li>
+        <li>Free gear hire days</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="special-pricing reveal">
+    <h3 class="special-title">Special Pricing</h3>
+    <div class="special-grid">
+      <div class="special-card">
+        <span class="special-icon">🧒</span>
+        <div class="special-name">Youth</div>
+        <div class="special-sub">Under 12</div>
+        <div class="special-price">$15 <span>/ visit</span></div>
+      </div>
+      <div class="special-card">
+        <span class="special-icon">🧑</span>
+        <div class="special-name">Teen</div>
+        <div class="special-sub">12–17 years</div>
+        <div class="special-price">$20 <span>/ visit</span></div>
+      </div>
+      <div class="special-card">
+        <span class="special-icon">👨‍👩‍👧‍👦</span>
+        <div class="special-name">Family Pass</div>
+        <div class="special-sub">2 adults + 2 children</div>
+        <div class="special-price">$65 <span>/ visit</span></div>
+      </div>
+    </div>
+    <a class="btn-primary" href="mailto:hello@gravityhouse.com.au" style="margin-top:2.5rem;display:inline-block;">Contact for More Details</a>
+  </div>
+</section>
+
+
+<!-- NEWSLETTER -->
+<div class="newsletter" id="newsletter">
+  <span class="section-tag">Stay Connected</span>
+  <h2 class="section-title" style="margin-bottom:0.5rem;">Be First to Know</h2>
+  <p>Get opening dates, events, and member-only offers straight to your inbox.</p>
+  <div class="substack-wrap">
+    <iframe src="https://gravityhouse.substack.com/embed" width="480" height="320" style="border:1px solid #EEE; background:white; border-radius:8px; max-width:100%;" frameborder="0" scrolling="no"></iframe>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div>
+      <a class="footer-logo" href="#"><span>G</span>RAVITY HOUSE</a>
+      <p class="footer-tagline">The Bega Valley's first indoor climbing gym. Bouldering, rope climbing, training and community — in the heart of Kalaru, NSW.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="#activities">Activities</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>About</h4>
+      <ul>
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#">The Team</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">Kalaru, NSW</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#9ef6fbf2f2f1def9ecffe8f7eae7f6f1ebedfbb0fdf1f3b0ffeb"><span class="__cf_email__" data-cfemail="1a727f7676755a7d687b6c736e6372756f697f34797577347b6f">[email&#160;protected]</span></a></li>
+        <li><a href="#newsletter">Subscribe to updates</a></li>
+        <li><a href="#">Opening Hours</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Gravity House. All rights reserved.</span>
+    <div class="social-links">
+      <a class="social-link" href="#" title="Facebook">f</a>
+      <a class="social-link" href="#" title="Instagram">ig</a>
+    </div>
+  </div>
+</footer>
+
+<!-- SUBSTACK MODAL -->
+<div class="modal-overlay" id="substack-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&#215;</button>
+    <h3>Join the Community</h3>
+    <p>Get opening dates, events, and member-only offers straight to your inbox.</p>
+    <iframe src="https://gravityhouse.substack.com/embed" width="480" height="320" style="border:1px solid #EEE; background:white; border-radius:6px; max-width:100%;" frameborder="0" scrolling="no"></iframe>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  function openModal() {
+    document.getElementById('substack-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('substack-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Scroll reveal
+  const observer =

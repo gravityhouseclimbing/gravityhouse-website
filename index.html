@@ -612,28 +612,6 @@
       display: flex;
       justify-content: center;
     }
-    /* Substack injects a form — scope overrides here */
-    #custom-substack-embed {
-      width: 100%;
-      max-width: 480px;
-    }
-    #custom-substack-embed form {
-      display: flex;
-      gap: 0;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    #custom-substack-embed input {
-      border-radius: 4px 0 0 4px !important;
-      border: 1px solid var(--border) !important;
-      border-right: none !important;
-    }
-    #custom-substack-embed button {
-      border-radius: 0 4px 4px 0 !important;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
 
     /* ─── FOOTER ────────────────────────────────────────────────── */
     .footer {
@@ -745,7 +723,6 @@
       .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
 
-      #custom-substack-embed { width: 100%; }
     }
 
     @media (max-width: 480px) {
@@ -1004,24 +981,9 @@
       <p>Get updates on our opening date, membership offers, events, and everything happening at Gravity House.</p>
 
       <div class="substack-wrapper">
-        <div id="custom-substack-embed"></div>
+        <div data-supascribe-embed-id="853107469169" data-supascribe-subscribe></div>
+        <script src="https://js.supascribe.com/v1/loader/OF4vVI38WMVCjCNgBTEBRFQfEGh2.js" async></script>
       </div>
-
-      <script>
-        window.CustomSubstackWidget = {
-          substackUrl: "gravityhouse.substack.com",
-          placeholder: "Enter your email address",
-          buttonText: "Join",
-          theme: "custom",
-          colors: {
-            primary:  "#d96b2a",  /* orange accent — matches buttons  */
-            input:    "#1e1d1a",  /* surface dark background           */
-            email:    "#f2ede4",  /* chalk — input text colour         */
-            text:     "#ffffff",  /* white text on orange button       */
-          },
-        };
-      </script>
-      <script src="https://substackapi.com/widget.js" async></script>
     </div>
   </section>
 

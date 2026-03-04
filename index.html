@@ -1266,36 +1266,66 @@
       });
     });
 
-    // Contact form — Web3Forms async submit
+    // Contact form — parallel submit to Web3Forms + Make webhook
     const contactForm = document.getElementById('contact-form-el');
-    const formSuccess = document.getElementById('form-success');
+    const formSuccess  = document.getElementById('form-success');
+
+    const MAKE_WEBHOOK = 'https://hook.eu1.make.com/83fa7k7v3n8g5xpe14ns20bkb324gvrc';
 
     contactForm.addEventListener('submit', async e => {
       e.preventDefault();
 
-      const btn = contactForm.querySelector('.btn-form-submit');
+      const btn      = contactForm.querySelector('.btn-form-submit');
+      const original = btn.textContent;
       btn.textContent = 'Sending…';
-      btn.disabled = true;
+      btn.disabled    = true;
+
+      const formData = new FormData(contactForm);
+
+      // Payload for Make → Google Sheets + Brevo (keys live server-side in Make)
+      const makePayload = {
+        name:          formData.get('name')         || '',
+        email:         formData.get('email')        || '',
+        town:          formData.get('town')         || '',
+        message:       formData.get('message')      || '',
+        email_updates: formData.get('email_updates') ? 'yes' : 'no',
+        timestamp:     new Date().toISOString(),
+        source:        'Gravity House Website',
+      };
 
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: new FormData(contactForm),
-        });
-        const json = await res.json();
+        const [w3fRes] = await Promise.all([
+
+          // 1. Web3Forms — email notification to inbox
+          fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body:   formData,
+          }),
+
+          // 2. Make webhook — Google Sheets row + Brevo contact (fire & forget)
+          //    mode:'no-cors' avoids preflight; response is opaque but we don't need it
+          fetch(MAKE_WEBHOOK, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(makePayload),
+            mode:    'no-cors',
+          }).catch(() => {}), // swallow — don't block UI on Make errors
+
+        ]);
+
+        const json = await w3fRes.json();
 
         if (json.success) {
           contactForm.style.display = 'none';
           formSuccess.style.display = 'block';
         } else {
-          btn.textContent = 'Read the Full Story';
-          btn.disabled = false;
-          alert('Something went wrong. Please try again.');
+          throw new Error(json.message || 'Submission failed');
         }
+
       } catch {
-        btn.textContent = 'Read the Full Story';
-        btn.disabled = false;
-        alert('Network error. Please try again.');
+        btn.textContent = original;
+        btn.disabled    = false;
+        alert('Something went wrong — please try again.');
       }
     });
 

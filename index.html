@@ -616,9 +616,50 @@
       line-height: 1.6;
     }
 
-    .substack-wrapper {
+    /* Newsletter form */
+    .nl-form {
+      max-width: 480px;
+      margin-inline: auto;
+    }
+    .nl-row {
       display: flex;
-      justify-content: center;
+      gap: 0.75rem;
+    }
+    .nl-row input[type="email"] {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid rgba(217, 107, 42, 0.4);
+      border-radius: 4px;
+      color: var(--chalk);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      min-width: 0;
+    }
+    .nl-row input[type="email"]::placeholder { color: var(--muted); }
+    .nl-row input[type="email"]:focus { border-color: var(--accent); }
+    .nl-row input[type="email"].field-error { border-color: #e05050; }
+    .nl-btn { white-space: nowrap; }
+    .nl-privacy {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .nl-success {
+      display: none;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--green);
+      border-radius: 4px;
+      max-width: 480px;
+      margin-inline: auto;
+    }
+    @media (max-width: 480px) {
+      .nl-row { flex-direction: column; }
     }
 
     /* ─── CONTACT FORM ──────────────────────────────────────────── */
@@ -1128,9 +1169,22 @@
       <h2 id="signup-title">Be First to Know</h2>
       <p>Get updates on our opening date, membership offers, events, and everything happening at Gravity House.</p>
 
-      <div class="substack-wrapper">
-        <div data-supascribe-embed-id="853107469169" data-supascribe-subscribe></div>
-        <script src="https://js.supascribe.com/v1/loader/OF4vVI38WMVCjCNgBTEBRFQfEGh2.js" async></script>
+      <form id="newsletter-form" class="nl-form" novalidate>
+        <div class="nl-row">
+          <input
+            type="email"
+            id="nl-email"
+            name="email"
+            placeholder="your@email.com"
+            required
+            autocomplete="email"
+          >
+          <button type="submit" class="btn-primary nl-btn">Subscribe</button>
+        </div>
+        <p class="nl-privacy">No spam. Unsubscribe any time.</p>
+      </form>
+      <div class="nl-success" id="nl-success" role="alert" aria-live="polite">
+        ✓ &nbsp;You're in! We'll keep you posted.
       </div>
     </div>
   </section>
@@ -1375,6 +1429,68 @@
 
       } catch (err) {
         console.error('Form error:', err.message);
+        btn.textContent = original;
+        btn.disabled    = false;
+        alert(err.message || 'Something went wrong — please try again.');
+      }
+    });
+
+    // Newsletter signup
+    const nlForm    = document.getElementById('newsletter-form');
+    const nlSuccess = document.getElementById('nl-success');
+    const nlEmail   = document.getElementById('nl-email');
+
+    nlEmail.addEventListener('input', () => nlEmail.classList.remove('field-error'));
+
+    nlForm.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const email = nlEmail.value.trim();
+      if (!email) {
+        nlEmail.classList.add('field-error');
+        nlEmail.focus();
+        return;
+      }
+
+      const btn      = nlForm.querySelector('.nl-btn');
+      const original = btn.textContent;
+      btn.textContent = 'Subscribing…';
+      btn.disabled    = true;
+
+      // Web3Forms payload — sends an email notification to inbox
+      const formData = new FormData();
+      formData.set('access_key',  '28d59107-4a8e-4eb1-a3f4-ab8ef6d69bbb');
+      formData.set('subject',     'New newsletter subscriber — Gravity House');
+      formData.set('from_name',   'Gravity House Website');
+      formData.set('name',        email);
+      formData.set('email',       email);
+
+      // Make payload — routes to Brevo contact creation
+      const makePayload = {
+        email,
+        source:    'Newsletter Signup',
+        timestamp: new Date().toISOString(),
+      };
+
+      try {
+        const [w3fRes] = await Promise.all([
+          fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData }),
+          fetch(MAKE_WEBHOOK, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(makePayload),
+          }).catch(() => {}),
+        ]);
+
+        const json = await w3fRes.json();
+        if (json.success) {
+          nlForm.style.display    = 'none';
+          nlSuccess.style.display = 'block';
+        } else {
+          throw new Error(json.message || 'Subscription failed');
+        }
+      } catch (err) {
+        console.error('Newsletter error:', err.message);
         btn.textContent = original;
         btn.disabled    = false;
         alert(err.message || 'Something went wrong — please try again.');

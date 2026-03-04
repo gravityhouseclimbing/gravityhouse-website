@@ -613,6 +613,130 @@
       justify-content: center;
     }
 
+    /* ─── CONTACT FORM ──────────────────────────────────────────── */
+    .contact {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner {
+      max-width: 600px;
+      margin-inline: auto;
+    }
+    .contact h2 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      text-transform: uppercase;
+      color: var(--chalk);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--chalk);
+    }
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg);
+      border: 1px solid rgba(217, 107, 42, 0.4);
+      border-radius: 4px;
+      color: var(--chalk);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 160px;
+    }
+
+    /* Checkbox row */
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.75rem;
+      cursor: pointer;
+    }
+    .form-check input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1px solid rgba(217, 107, 42, 0.5);
+      border-radius: 3px;
+      background: var(--bg);
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .form-check input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .form-check input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .form-check span {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Submit */
+    .btn-form-submit {
+      display: block;
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 1.1rem 2rem;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-form-submit:hover { background: #c05a1f; }
+
+    /* Success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      border: 1px solid var(--green);
+      border-radius: 4px;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
     /* ─── FOOTER ────────────────────────────────────────────────── */
     .footer {
       background: var(--surface);
@@ -987,6 +1111,82 @@
     </div>
   </section>
 
+  <!-- ═══ CONTACT FORM ════════════════════════════════════════════ -->
+  <section class="contact section" id="contact-form" aria-labelledby="contact-title">
+    <div class="container contact-inner">
+      <h2 id="contact-title">Send Us a Message</h2>
+
+      <form
+        id="contact-form-el"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        novalidate
+      >
+        <!-- Web3Forms access key -->
+        <input type="hidden" name="access_key" value="28d59107-4a8e-4eb1-a3f4-ab8ef6d69bbb">
+        <input type="hidden" name="subject" value="New message from Gravity House website">
+        <input type="hidden" name="from_name" value="Gravity House Website">
+        <!-- Honeypot spam protection -->
+        <input type="checkbox" name="botcheck" style="display:none">
+
+        <div class="form-group">
+          <label for="cf-name">Name</label>
+          <input
+            id="cf-name"
+            type="text"
+            name="name"
+            placeholder="your Full Name"
+            required
+            autocomplete="name"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="cf-email">Email</label>
+          <input
+            id="cf-email"
+            type="email"
+            name="email"
+            placeholder="Your.email@example.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="cf-town">Town / Suburb</label>
+          <input
+            id="cf-town"
+            type="text"
+            name="town"
+            placeholder="eg. Merimbula, Bega, Eden"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="cf-message">Message</label>
+          <textarea
+            id="cf-message"
+            name="message"
+            placeholder="Share some love or let us know how we can help"
+            required
+          ></textarea>
+        </div>
+
+        <label class="form-check">
+          <input type="checkbox" name="email_updates" value="yes">
+          <span>Send me email updates of the project</span>
+        </label>
+
+        <button type="submit" class="btn-form-submit">Read the Full Story</button>
+      </form>
+
+      <div class="form-success" id="form-success" role="alert" aria-live="polite">
+        ✓ &nbsp;Thanks! We'll be in touch soon.
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ FOOTER ═══════════════════════════════════════════════════ -->
   <footer class="footer" id="contact" aria-label="Site footer">
     <div class="container">
@@ -1059,6 +1259,39 @@
         links.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
       });
+    });
+
+    // Contact form — Web3Forms async submit
+    const contactForm = document.getElementById('contact-form-el');
+    const formSuccess = document.getElementById('form-success');
+
+    contactForm.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const btn = contactForm.querySelector('.btn-form-submit');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(contactForm),
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          contactForm.style.display = 'none';
+          formSuccess.style.display = 'block';
+        } else {
+          btn.textContent = 'Read the Full Story';
+          btn.disabled = false;
+          alert('Something went wrong. Please try again.');
+        }
+      } catch {
+        btn.textContent = 'Read the Full Story';
+        btn.disabled = false;
+        alert('Network error. Please try again.');
+      }
     });
 
   </script>

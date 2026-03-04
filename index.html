@@ -718,6 +718,16 @@
       color: var(--muted);
     }
 
+    /* Two-column form row */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
     /* Submit */
     .btn-form-submit {
       display: block;
@@ -1141,16 +1151,29 @@
         <!-- Honeypot spam protection -->
         <input type="checkbox" name="botcheck" style="display:none">
 
-        <div class="form-group">
-          <label for="cf-name">Name</label>
-          <input
-            id="cf-name"
-            type="text"
-            name="name"
-            placeholder="your Full Name"
-            required
-            autocomplete="name"
-          >
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-first-name">First Name</label>
+            <input
+              id="cf-first-name"
+              type="text"
+              name="first_name"
+              placeholder="Jane"
+              required
+              autocomplete="given-name"
+            >
+          </div>
+          <div class="form-group">
+            <label for="cf-last-name">Last Name</label>
+            <input
+              id="cf-last-name"
+              type="text"
+              name="last_name"
+              placeholder="Smith"
+              required
+              autocomplete="family-name"
+            >
+          </div>
         </div>
 
         <div class="form-group">
@@ -1190,7 +1213,7 @@
           <span>Send me email updates of the project</span>
         </label>
 
-        <button type="submit" class="btn-form-submit">Read the Full Story</button>
+        <button type="submit" class="btn-form-submit">Send Message</button>
       </form>
 
       <div class="form-success" id="form-success" role="alert" aria-live="polite">
@@ -1304,11 +1327,15 @@
       btn.textContent = 'Sending…';
       btn.disabled    = true;
 
-      const formData = new FormData(contactForm);
+      const formData  = new FormData(contactForm);
+      const firstName = (formData.get('first_name') || '').trim();
+      const lastName  = (formData.get('last_name')  || '').trim();
+      formData.set('name', `${firstName} ${lastName}`.trim());
 
       // Payload for Make → Google Sheets + Brevo (keys live server-side in Make)
       const makePayload = {
-        name:          formData.get('name')         || '',
+        first_name:    firstName,
+        last_name:     lastName,
         email:         formData.get('email')        || '',
         town:          formData.get('town')         || '',
         message:       formData.get('message')      || '',

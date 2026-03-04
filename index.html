@@ -373,11 +373,13 @@
     .activity-card:hover { background: var(--surface2); }
     .activity-card:hover::after { transform: scaleX(1); }
 
-    .activity-icon {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
+    .activity-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 2px;
       display: block;
-      line-height: 1;
+      margin-bottom: 0.25rem;
     }
     .activity-card h3 {
       font-family: var(--font-display);
@@ -970,42 +972,42 @@
 
       <div class="activities-grid" role="list">
         <article class="activity-card" role="listitem">
-          <span class="activity-icon" aria-hidden="true">🧗</span>
+          <img class="activity-img" src="act-bouldering.jpg" alt="Climbers on bouldering wall" width="600" height="400" loading="lazy">
           <h3>Bouldering</h3>
           <p>No ropes, no gear, no fuss. Colour-graded problems from absolute beginner to expert. The heart of Gravity House.</p>
           <span class="activity-badge">All levels welcome</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <span class="activity-icon" aria-hidden="true">🏋️</span>
+          <img class="activity-img" src="act-training.jpg" alt="Training equipment in the gym" width="600" height="400" loading="lazy">
           <h3>Training Area</h3>
           <p>A functional fitness gym designed for young climbers. Hangboards, campus rungs, yoga and stretching. Everything you need to send that project at Gravity House.</p>
           <span class="activity-badge">Strength &amp; Conditioning</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <span class="activity-icon" aria-hidden="true">🧒</span>
+          <img class="activity-img" src="act-kids.jpg" alt="Kids climbing in the Kids Zone" width="600" height="400" loading="lazy">
           <h3>Kids Zone</h3>
           <p>A colourful, dedicated area for young climbers aged 4–12. Shorter walls, gentle angles and fun routes. Youth matters here.</p>
           <span class="activity-badge">Family Friendly</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <span class="activity-icon" aria-hidden="true">☕</span>
+          <img class="activity-img" src="act-cafe.jpg" alt="Coffee and drinks at the café" width="600" height="400" loading="lazy">
           <h3>Café &amp; Drinks</h3>
           <p>Come and hang for a different vibe from your local community. Good coffee, cold drinks, good vibes.</p>
           <span class="activity-badge">Open Daily</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <span class="activity-icon" aria-hidden="true">🏆</span>
+          <img class="activity-img" src="act-events.jpg" alt="Community event at Gravity House" width="600" height="400" loading="lazy">
           <h3>Events &amp; Comps</h3>
           <p>Community comp nights, youth programs, workshops and more. There's always something happening at Gravity House.</p>
           <span class="activity-badge">Join the Events</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <span class="activity-icon" aria-hidden="true">🎓</span>
+          <img class="activity-img" src="act-coaching.jpg" alt="Climbing coach with students" width="600" height="400" loading="lazy">
           <h3>Coaching &amp; Classes</h3>
           <p>Got sessions for beginners, youth programs and private coaching for those who want to progress their climbing efficiently.</p>
           <span class="activity-badge">All Levels</span>

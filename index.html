@@ -665,6 +665,13 @@
     .form-group textarea::placeholder { color: var(--muted); }
     .form-group input:focus,
     .form-group textarea:focus { border-color: var(--accent); }
+    .form-group input.field-error,
+    .form-group textarea.field-error {
+      border-color: #e05050;
+      outline: none;
+    }
+    .form-group input.field-error:focus,
+    .form-group textarea.field-error:focus { border-color: var(--accent); }
     .form-group textarea {
       resize: vertical;
       min-height: 160px;
@@ -1272,8 +1279,25 @@
 
     const MAKE_WEBHOOK = 'https://hook.eu1.make.com/83fa7k7v3n8g5xpe14ns20bkb324gvrc';
 
+    // Clear field-error state on user input
+    contactForm.querySelectorAll('[required]').forEach(field => {
+      field.addEventListener('input', () => field.classList.remove('field-error'));
+    });
+
     contactForm.addEventListener('submit', async e => {
       e.preventDefault();
+
+      // ── Client-side validation ────────────────────────────────────
+      let valid = true;
+      contactForm.querySelectorAll('[required]').forEach(field => {
+        const ok = field.value.trim() !== '';
+        field.classList.toggle('field-error', !ok);
+        if (!ok) valid = false;
+      });
+      if (!valid) {
+        contactForm.querySelector('.field-error')?.focus();
+        return;
+      }
 
       const btn      = contactForm.querySelector('.btn-form-submit');
       const original = btn.textContent;
@@ -1322,10 +1346,11 @@
           throw new Error(json.message || 'Submission failed');
         }
 
-      } catch {
+      } catch (err) {
+        console.error('Form error:', err.message);
         btn.textContent = original;
         btn.disabled    = false;
-        alert('Something went wrong — please try again.');
+        alert(err.message || 'Something went wrong — please try again.');
       }
     });
 

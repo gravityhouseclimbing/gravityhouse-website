@@ -1327,12 +1327,10 @@
           }),
 
           // 2. Make webhook — Google Sheets row + Brevo contact (fire & forget)
-          //    mode:'no-cors' avoids preflight; response is opaque but we don't need it
           fetch(MAKE_WEBHOOK, {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
             body:    JSON.stringify(makePayload),
-            mode:    'no-cors',
           }).catch(() => {}), // swallow — don't block UI on Make errors
 
         ]);

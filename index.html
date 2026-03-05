@@ -3,45 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#141412">
+  <meta name="color-scheme" content="dark">
 
   <!-- Primary SEO -->
   <title>Gravity House — Indoor Climbing Gym | Bega Valley, NSW</title>
   <meta name="description" content="Gravity House is Bega Valley's first indoor climbing and bouldering gym. Coming to Kalaru, NSW in late 2026. All ages, all levels welcome. Join the community today.">
   <meta name="keywords" content="indoor climbing gym, bouldering, Bega Valley, Kalaru NSW, climbing classes, kids climbing, fitness, rock climbing">
   <link rel="canonical" href="https://gravityhouse.vercel.app/">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Gravity House">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://gravityhouse.vercel.app/">
+  <meta property="og:site_name" content="Gravity House">
   <meta property="og:title" content="Gravity House — Indoor Climbing Gym | Bega Valley">
   <meta property="og:description" content="Bega Valley's first indoor climbing and bouldering gym. Coming to Kalaru, NSW in late 2026. Join 600+ community supporters.">
-  <meta property="og:image" content="https://gravityhouse.vercel.app/hero.jpg">
+  <meta property="og:image" content="https://gravityhouse.vercel.app/hero-1920.jpg">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
+  <meta property="og:image:alt" content="Climber on yellow bouldering wall at Gravity House">
   <meta property="og:locale" content="en_AU">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Gravity House — Indoor Climbing Gym | Bega Valley">
   <meta name="twitter:description" content="Bega Valley's first indoor climbing and bouldering gym. Opening Kalaru, NSW late 2026.">
-  <meta name="twitter:image" content="https://gravityhouse.vercel.app/hero.jpg">
+  <meta name="twitter:image" content="https://gravityhouse.vercel.app/hero-1920.jpg">
+  <meta name="twitter:image:alt" content="Climber on yellow bouldering wall at Gravity House">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SportsActivityLocation",
+    "@type": ["SportsActivityLocation", "LocalBusiness"],
     "name": "Gravity House",
-    "description": "Bega Valley's first indoor climbing and bouldering gym",
+    "description": "Bega Valley's first indoor climbing and bouldering gym — opening Kalaru, NSW late 2026. All ages and skill levels welcome.",
     "url": "https://gravityhouse.vercel.app",
+    "image": "https://gravityhouse.vercel.app/hero-1920.jpg",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Kalaru",
       "addressRegion": "NSW",
+      "postalCode": "2550",
+      "addressCountry": "AU"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
       "addressCountry": "AU"
     },
     "openingDate": "2026-12-01",
-    "sport": "Rock Climbing"
+    "sport": ["Rock Climbing", "Bouldering", "Fitness"],
+    "priceRange": "$$",
+    "sameAs": [
+      "https://instagram.com/gravityhouseclimbing",
+      "https://facebook.com/gravityhouseclimbing"
+    ]
   }
   </script>
+
+  <!-- Preload LCP hero image -->
+  <link rel="preload" as="image" href="hero-1920.webp" imagesrcset="hero-800.webp 800w, hero-1200.webp 1200w, hero-1920.webp 1920w" imagesizes="100vw" type="image/webp">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1061,13 +1084,19 @@
   <!-- ═══ HERO ════════════════════════════════════════════════════ -->
   <section class="hero" aria-label="Hero">
     <div class="hero-bg" aria-hidden="true">
-      <img
-        src="hero.jpg"
-        alt="Climber on yellow bouldering wall at Gravity House"
-        width="3842"
-        height="2561"
-        fetchpriority="high"
-      >
+      <picture>
+        <source type="image/webp"
+          srcset="hero-800.webp 800w, hero-1200.webp 1200w, hero-1920.webp 1920w"
+          sizes="100vw">
+        <img
+          src="hero-1920.jpg"
+          alt="Climber on yellow bouldering wall at Gravity House"
+          width="1920"
+          height="1280"
+          fetchpriority="high"
+          decoding="sync"
+        >
+      </picture>
       <div class="hero-overlay"></div>
     </div>
 
@@ -1144,42 +1173,42 @@
 
       <div class="activities-grid" role="list">
         <article class="activity-card" role="listitem">
-          <img class="activity-img" src="act-bouldering.jpg" alt="Climbers on bouldering wall" width="600" height="400" loading="lazy">
+          <picture><source type="image/webp" srcset="act-bouldering.webp"><img class="activity-img" src="act-bouldering.jpg" alt="Climbers on bouldering wall" width="600" height="400" loading="lazy"></picture>
           <h3>Bouldering</h3>
           <p>No ropes, no gear, no fuss. 300m² of colour-graded climbs from absolute beginner to expert. The heart of Gravity House.</p>
           <span class="activity-badge">All levels welcome</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <img class="activity-img" src="act-training.jpg" alt="Training equipment in the gym" width="600" height="400" loading="lazy">
+          <picture><source type="image/webp" srcset="act-training.webp"><img class="activity-img" src="act-training.jpg" alt="Training equipment in the gym" width="600" height="400" loading="lazy"></picture>
           <h3>Training Area</h3>
           <p>A functional fitness gym designed for young climbers. Hangboards, campus rungs, yoga and stretching. Everything you need to send that project at Gravity House.</p>
           <span class="activity-badge">Strength &amp; Conditioning</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <img class="activity-img" src="act-kids.jpg" alt="Kids climbing in the Kids Zone" width="600" height="400" loading="lazy">
+          <picture><source type="image/webp" srcset="act-kids.webp"><img class="activity-img" src="act-kids.jpg" alt="Kids climbing in the Kids Zone" width="600" height="400" loading="lazy"></picture>
           <h3>Kids Zone</h3>
           <p>A colourful, dedicated area for young climbers aged 4–12. Shorter walls, gentle angles and fun routes. Youth matters here.</p>
           <span class="activity-badge">Family Friendly</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <img class="activity-img" src="act-cafe.jpg" alt="Coffee and drinks at the café" width="600" height="400" loading="lazy">
+          <picture><source type="image/webp" srcset="act-cafe.webp"><img class="activity-img" src="act-cafe.jpg" alt="Coffee and drinks at the café" width="600" height="400" loading="lazy"></picture>
           <h3>Café &amp; Drinks</h3>
           <p>Come and hang for a different vibe from your local community. Good coffee, cold drinks, good vibes.</p>
           <span class="activity-badge">Open Daily</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <img class="activity-img" src="act-events.jpg" alt="Community event at Gravity House" width="600" height="400" loading="lazy">
+          <picture><source type="image/webp" srcset="act-events.webp"><img class="activity-img" src="act-events.jpg" alt="Community event at Gravity House" width="600" height="400" loading="lazy"></picture>
           <h3>Events &amp; Comps</h3>
           <p>Community comp nights, youth programs, workshops and more. There's always something happening at Gravity House.</p>
           <span class="activity-badge">Join the Events</span>
         </article>
 
         <article class="activity-card" role="listitem">
-          <img class="activity-img" src="act-coaching.jpg" alt="Climbing coach with students" width="600" height="400" loading="lazy">
+          <picture><source type="image/webp" srcset="act-coaching.webp"><img class="activity-img" src="act-coaching.jpg" alt="Climbing coach with students" width="600" height="400" loading="lazy"></picture>
           <h3>Coaching &amp; Classes</h3>
           <p>Got sessions for beginners, youth programs and private coaching for those who want to progress their climbing efficiently.</p>
           <span class="activity-badge">All Levels</span>

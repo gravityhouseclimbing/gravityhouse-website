@@ -221,6 +221,100 @@
       animation: fade-up 0.6s ease both;
     }
 
+    /* ─── OPTION A: ANNOUNCEMENT BAR ────────────────────────── */
+    .ann-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border-accent);
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--chalk);
+      position: relative;
+      line-height: 1.5;
+    }
+    .ann-bar a {
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .ann-bar a:hover { text-decoration: underline; }
+    .ann-bar-close {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+      padding: 0.25rem 0.5rem;
+    }
+    .ann-bar-close:hover { color: var(--chalk); }
+
+    /* ─── OPTION B: HERO HIRING BUTTON ──────────────────────── */
+    .btn-hiring {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: none;
+      border: 1px solid var(--border-accent);
+      color: var(--accent);
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-hiring:hover { background: rgba(217,107,42,0.12); color: var(--chalk); }
+
+    /* ─── OPTION C: FULL-WIDTH CONSTRUCTION BANNER ───────────── */
+    .const-banner {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .const-banner-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: var(--max-w);
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+    .const-col {
+      padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+    .const-col:first-child { border-right: 1px solid var(--border); }
+    .const-col-icon { font-size: 1.75rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .const-col-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .const-col-text { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+    .const-col-text strong { color: var(--chalk); }
+    .const-col-cta { display: inline-block; margin-top: 1rem; }
+    @media (max-width: 640px) {
+      .const-banner-inner { grid-template-columns: 1fr; }
+      .const-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
     .hero h1 {
       font-family: var(--font-display);
       font-weight: 900;
@@ -931,6 +1025,12 @@
 
 <body>
 
+  <!-- ═══ OPTION A: ANNOUNCEMENT BAR ════════════════════════════ -->
+  <div class="ann-bar" id="ann-bar" role="region" aria-label="Site announcement">
+    <span>🚧 <strong>Under construction</strong> &nbsp;·&nbsp; Opening Kalaru, NSW late 2026 &nbsp;·&nbsp; <a href="https://docs.google.com/forms/d/e/1FAIpQLScFPr-uf-oQqFaGhcu0dLYmXZIjTwfQFx400hWYf3QeeqrNuA/viewform" target="_blank" rel="noopener noreferrer">We're hiring — join the team →</a></span>
+    <button class="ann-bar-close" id="ann-bar-close" aria-label="Dismiss announcement">×</button>
+  </div>
+
   <!-- ═══ NAV ═══════════════════════════════════════════════════ -->
   <header>
     <nav class="nav" aria-label="Main navigation">
@@ -973,7 +1073,8 @@
     </div>
 
     <div class="hero-content">
-      <p class="hero-badge" aria-label="Location and opening">Kalaru, NSW &bull; Late 2026 opening</p>
+      <!-- OPTION B badge — update text to show construction status -->
+      <p class="hero-badge" aria-label="Location and opening">🚧 &nbsp;Under Construction &nbsp;&bull;&nbsp; Opening late 2026</p>
 
       <h1>
         CLIMB.<br>
@@ -988,6 +1089,8 @@
       <div class="hero-ctas">
         <a href="#signup" class="btn-primary">Join the Community</a>
         <a href="#activities" class="btn-ghost">Explore the Gym</a>
+        <!-- OPTION B hiring button -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScFPr-uf-oQqFaGhcu0dLYmXZIjTwfQFx400hWYf3QeeqrNuA/viewform" class="btn-hiring" target="_blank" rel="noopener noreferrer">We're Hiring →</a>
       </div>
 
       <div class="hero-stats" aria-label="Key stats">
@@ -1006,6 +1109,27 @@
       </div>
     </div>
   </section>
+
+  <!-- ═══ OPTION C: CONSTRUCTION BANNER ═══════════════════════════ -->
+  <div class="const-banner" role="region" aria-label="Construction and hiring update">
+    <div class="const-banner-inner">
+      <div class="const-col">
+        <span class="const-col-icon" aria-hidden="true">🏗</span>
+        <div>
+          <p class="const-col-label">Under Construction</p>
+          <p class="const-col-text">We're building Bega Valley's first indoor climbing gym in Kalaru, NSW. Planned opening: <strong>late 2026</strong>. Follow our progress and be first to know.</p>
+        </div>
+      </div>
+      <div class="const-col">
+        <span class="const-col-icon" aria-hidden="true">📋</span>
+        <div>
+          <p class="const-col-label">We're Hiring</p>
+          <p class="const-col-text">Join the founding team. We're looking for passionate people to help build something special in the valley.</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScFPr-uf-oQqFaGhcu0dLYmXZIjTwfQFx400hWYf3QeeqrNuA/viewform" class="btn-primary const-col-cta" target="_blank" rel="noopener noreferrer">Express Interest →</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ ACTIVITIES ═══════════════════════════════════════════════ -->
   <section class="activities section" id="activities" aria-labelledby="activities-title">
@@ -1448,6 +1572,13 @@
         alert(err.message || 'Something went wrong — please try again.');
       }
     });
+
+    // Option A — dismiss announcement bar
+    const annBar   = document.getElementById('ann-bar');
+    const annClose = document.getElementById('ann-bar-close');
+    if (annClose && annBar) {
+      annClose.addEventListener('click', () => { annBar.style.display = 'none'; });
+    }
 
     // Newsletter signup
     const nlForm    = document.getElementById('newsletter-form');

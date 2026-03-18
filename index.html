@@ -142,7 +142,7 @@
 
     .btn-subscribe {
       background: var(--accent);
-      color: #fff;
+      color: #fff !important;
       padding: 0.55rem 1.4rem;
       border-radius: 4px;
       font-size: 0.85rem;
@@ -339,10 +339,16 @@
 
     .activities-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: 1fr;          /* mobile: single column  */
       gap: 1.5px;
       background: var(--border);
       border: 1px solid var(--border);
+    }
+    @media (min-width: 640px) {
+      .activities-grid { grid-template-columns: repeat(2, 1fr); }  /* md: 2×3 */
+    }
+    @media (min-width: 1100px) {
+      .activities-grid { grid-template-columns: repeat(3, 1fr); }  /* lg: 3×2 */
     }
 
     .activity-card {
@@ -608,40 +614,144 @@
       line-height: 1.6;
     }
 
-    .signup-form {
+    .substack-wrapper {
       display: flex;
       justify-content: center;
-      gap: 0;
-      max-width: 440px;
+    }
+
+    /* ─── CONTACT FORM ──────────────────────────────────────────── */
+    .contact {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner {
+      max-width: 600px;
       margin-inline: auto;
     }
-    .signup-form input[type="email"] {
-      flex: 1;
-      padding: 0.85rem 1.25rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-right: none;
-      border-radius: 4px 0 0 4px;
+    .contact h2 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      text-transform: uppercase;
       color: var(--chalk);
-      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--chalk);
+    }
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg);
+      border: 1px solid rgba(217, 107, 42, 0.4);
+      border-radius: 4px;
+      color: var(--chalk);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.85rem 1rem;
       outline: none;
       transition: border-color 0.2s;
+      width: 100%;
     }
-    .signup-form input[type="email"]::placeholder { color: var(--muted); }
-    .signup-form input[type="email"]:focus { border-color: var(--accent); }
-    .signup-form button {
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--accent); }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 160px;
+    }
+
+    /* Checkbox row */
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.75rem;
+      cursor: pointer;
+    }
+    .form-check input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1px solid rgba(217, 107, 42, 0.5);
+      border-radius: 3px;
+      background: var(--bg);
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .form-check input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .form-check input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .form-check span {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Submit */
+    .btn-form-submit {
+      display: block;
+      width: 100%;
       background: var(--accent);
       color: #fff;
-      padding: 0.85rem 1.5rem;
-      border-radius: 0 4px 4px 0;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
+      border: none;
+      border-radius: 4px;
+      padding: 1.1rem 2rem;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      cursor: pointer;
       transition: background 0.2s;
-      white-space: nowrap;
     }
-    .signup-form button:hover { background: #c05a1f; }
+    .btn-form-submit:hover { background: #c05a1f; }
+
+    /* Two-column name row */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* Success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      border: 1px solid var(--green);
+      border-radius: 4px;
+      color: var(--green);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
 
     /* ─── FOOTER ────────────────────────────────────────────────── */
     .footer {
@@ -745,7 +855,6 @@
 
       .hero h1 { font-size: clamp(3.5rem, 15vw, 6rem); }
 
-      .activities-grid,
       .pricing-grid { grid-template-columns: 1fr; }
 
       .hero-stats { gap: 2rem; }
@@ -753,9 +862,6 @@
       .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
       .footer-bottom { flex-direction: column; align-items: flex-start; }
 
-      .signup-form { flex-direction: column; }
-      .signup-form input[type="email"] { border-right: 1px solid var(--border); border-bottom: none; border-radius: 4px 4px 0 0; }
-      .signup-form button { border-radius: 0 0 4px 4px; }
     }
 
     @media (max-width: 480px) {
@@ -763,6 +869,11 @@
       .hero-ctas { flex-direction: column; }
     }
   </style>
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 
 <body>
@@ -785,6 +896,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#community">Community</a></li>
+        <li><a href="partners.html">Partners</a></li>
         <li><a href="#contact">Contact</a></li>
         <li><a href="#signup" class="btn-subscribe">Subscribe</a></li>
       </ul>
@@ -1013,18 +1125,99 @@
       <h2 id="signup-title">Be First to Know</h2>
       <p>Get updates on our opening date, membership offers, events, and everything happening at Gravity House.</p>
 
-      <form class="signup-form" action="#" method="post" aria-label="Email signup form">
-        <label for="email-input" class="sr-only">Enter your email</label>
-        <input
-          id="email-input"
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          required
-          autocomplete="email"
-        >
-        <button type="submit">Join</button>
+      <div class="substack-wrapper">
+        <div data-supascribe-embed-id="853107469169" data-supascribe-subscribe></div>
+        <script src="https://js.supascribe.com/v1/loader/OF4vVI38WMVCjCNgBTEBRFQfEGh2.js" async></script>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT FORM ════════════════════════════════════════════ -->
+  <section class="contact section" id="contact-form" aria-labelledby="contact-title">
+    <div class="container contact-inner">
+      <h2 id="contact-title">Send Us a Message</h2>
+
+      <form
+        id="contact-form-el"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        novalidate
+      >
+        <!-- Web3Forms access key -->
+        <input type="hidden" name="access_key" value="28d59107-4a8e-4eb1-a3f4-ab8ef6d69bbb">
+        <input type="hidden" name="subject" value="New message from Gravity House website">
+        <input type="hidden" name="from_name" value="Gravity House Website">
+        <!-- Honeypot spam protection -->
+        <input type="checkbox" name="botcheck" style="display:none">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-first-name">First Name</label>
+            <input
+              id="cf-first-name"
+              type="text"
+              name="first_name"
+              placeholder="Jane"
+              required
+              autocomplete="given-name"
+            >
+          </div>
+          <div class="form-group">
+            <label for="cf-last-name">Last Name</label>
+            <input
+              id="cf-last-name"
+              type="text"
+              name="last_name"
+              placeholder="Smith"
+              required
+              autocomplete="family-name"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cf-email">Email</label>
+          <input
+            id="cf-email"
+            type="email"
+            name="email"
+            placeholder="Your.email@example.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="cf-town">Town / Suburb</label>
+          <input
+            id="cf-town"
+            type="text"
+            name="town"
+            placeholder="eg. Merimbula, Bega, Eden"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="cf-message">Message</label>
+          <textarea
+            id="cf-message"
+            name="message"
+            placeholder="Share some love or let us know how we can help"
+            required
+          ></textarea>
+        </div>
+
+        <label class="form-check">
+          <input type="checkbox" name="email_updates" value="yes">
+          <span>Send me email updates of the project</span>
+        </label>
+
+        <button type="submit" class="btn-form-submit">Send Message</button>
       </form>
+
+      <div class="form-success" id="form-success" role="alert" aria-live="polite">
+        ✓ &nbsp;Thanks! We'll be in touch soon.
+      </div>
     </div>
   </section>
 
@@ -1055,8 +1248,8 @@
           <ul>
             <li><a href="#about">Our Story</a></li>
             <li><a href="#community">Community</a></li>
+            <li><a href="partners.html">Partners</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="#about">Opening Hours</a></li>
           </ul>
         </nav>
 
@@ -1102,17 +1295,75 @@
       });
     });
 
-    // Email form (placeholder handler)
-    document.querySelector('.signup-form').addEventListener('submit', e => {
+    // Contact form — parallel submit to Web3Forms + Make webhook
+    const contactForm = document.getElementById('contact-form-el');
+    const formSuccess  = document.getElementById('form-success');
+
+    const MAKE_WEBHOOK = 'https://hook.eu1.make.com/83fa7k7v3n8g5xpe14ns20bkb324gvrc';
+
+    contactForm.addEventListener('submit', async e => {
       e.preventDefault();
-      const input = e.target.querySelector('input[type="email"]');
-      const btn   = e.target.querySelector('button');
-      btn.textContent = '✓ You\'re in!';
-      btn.style.background = '#6b8f4e';
-      input.value = '';
-      input.disabled = true;
-      btn.disabled = true;
+
+      const btn      = contactForm.querySelector('.btn-form-submit');
+      const original = btn.textContent;
+      btn.textContent = 'Sending…';
+      btn.disabled    = true;
+
+      const formData = new FormData(contactForm);
+
+      // Combine first + last for Web3Forms email "from" name
+      const firstName = (formData.get('first_name') || '').trim();
+      const lastName  = (formData.get('last_name')  || '').trim();
+      formData.set('name', `${firstName} ${lastName}`.trim());
+
+      // Payload for Make → Google Sheets + Brevo (keys live server-side in Make)
+      const makePayload = {
+        first_name:    firstName,
+        last_name:     lastName,
+        email:         formData.get('email')        || '',
+        town:          formData.get('town')         || '',
+        message:       formData.get('message')      || '',
+        email_updates: formData.get('email_updates') ? 'yes' : 'no',
+        timestamp:     new Date().toISOString(),
+        source:        'Gravity House Website',
+      };
+
+      try {
+        const [w3fRes] = await Promise.all([
+
+          // 1. Web3Forms — email notification to inbox
+          fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body:   formData,
+          }),
+
+          // 2. Make webhook — Google Sheets row + Brevo contact (fire & forget)
+          //    mode:'no-cors' avoids preflight; response is opaque but we don't need it
+          fetch(MAKE_WEBHOOK, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(makePayload),
+            mode:    'no-cors',
+          }).catch(() => {}), // swallow — don't block UI on Make errors
+
+        ]);
+
+        const json = await w3fRes.json();
+
+        if (json.success) {
+          contactForm.style.display = 'none';
+          formSuccess.style.display = 'block';
+        } else {
+          throw new Error(json.message || 'Submission failed');
+        }
+
+      } catch {
+        btn.textContent = original;
+        btn.disabled    = false;
+        alert('Something went wrong — please try again.');
+      }
     });
+
   </script>
 
 </body>

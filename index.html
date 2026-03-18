@@ -934,6 +934,16 @@
     }
     .btn-form-submit:hover { background: #c05a1f; }
 
+    /* Two-column name row */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
     /* Success message */
     .form-success {
       display: none;
@@ -1074,6 +1084,11 @@
       .nav-links.open .nav-subscribe-menu { display: block; }
     }
   </style>
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 
 <body>
@@ -1527,9 +1542,8 @@
         <nav class="footer-col" aria-label="About links">
           <h4>About</h4>
           <ul>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#community">Our Story</a></li>
-            <li><a href="#signup">Community</a></li>
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#community">Community</a></li>
             <li><a href="partners.html">Partners</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -1609,6 +1623,11 @@
       btn.disabled    = true;
 
       const formData  = new FormData(contactForm);
+      const firstName = (formData.get('first_name') || '').trim();
+      const lastName  = (formData.get('last_name')  || '').trim();
+      formData.set('name', `${firstName} ${lastName}`.trim());
+
+      // Combine first + last for Web3Forms email "from" name
       const firstName = (formData.get('first_name') || '').trim();
       const lastName  = (formData.get('last_name')  || '').trim();
       formData.set('name', `${firstName} ${lastName}`.trim());

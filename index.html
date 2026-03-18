@@ -1469,10 +1469,6 @@
           ></textarea>
         </div>
 
-        <label class="form-check">
-          <input type="checkbox" name="email_updates" value="yes">
-          <span>Send me email updates of the project</span>
-        </label>
 
         <button type="submit" class="btn-form-submit">Send Message</button>
       </form>
@@ -1620,7 +1616,7 @@
         email:         formData.get('email')        || '',
         town:          formData.get('town')         || '',
         message:       formData.get('message')      || '',
-        email_updates: formData.get('email_updates') ? 'yes' : 'no',
+        email_updates: 'yes',
         timestamp:     new Date().toISOString(),
         source:        'Gravity House Website',
       };

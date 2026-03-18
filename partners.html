@@ -538,6 +538,20 @@
       border-color: #e05050;
     }
 
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+    .form-row > div {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
     .btn-form-submit {
       background: var(--accent);
       color: #fff;
@@ -901,14 +915,25 @@
       <input type="hidden" name="from_name" value="Gravity House Partners Page">
       <input type="hidden" name="redirect" value="false">
 
-      <label for="pf-name">Your name</label>
-      <input type="text" id="pf-name" name="name" placeholder="Jane Smith" required>
+      <div class="form-row">
+        <div>
+          <label for="pf-first-name">First Name</label>
+          <input type="text" id="pf-first-name" name="first_name" placeholder="Jane" required autocomplete="given-name">
+        </div>
+        <div>
+          <label for="pf-last-name">Last Name</label>
+          <input type="text" id="pf-last-name" name="last_name" placeholder="Smith" required autocomplete="family-name">
+        </div>
+      </div>
 
-      <label for="pf-business">Business / Organisation</label>
+      <label for="pf-business">Business Name</label>
       <input type="text" id="pf-business" name="business" placeholder="Acme Co." required>
 
       <label for="pf-email">Email</label>
-      <input type="email" id="pf-email" name="email" placeholder="jane@acme.com.au" required>
+      <input type="email" id="pf-email" name="email" placeholder="jane@acme.com.au" required autocomplete="email">
+
+      <label for="pf-town">Town / Suburb</label>
+      <input type="text" id="pf-town" name="town" placeholder="Bega" required autocomplete="address-level2">
 
       <label for="pf-message">What are you thinking?</label>
       <textarea id="pf-message" name="message" placeholder="Tell us about your idea..." required></textarea>
@@ -1093,14 +1118,20 @@
 
       const formData = new FormData(partnerForm);
 
-      // Make payload — includes business name as extra field
+      // Make payload — combine first/last name, include all fields
+      const firstName = (formData.get('first_name') || '').trim();
+      const lastName  = (formData.get('last_name')  || '').trim();
+      formData.set('name', `${firstName} ${lastName}`.trim());
+
       const makePayload = {
-        name: formData.get('name') || '',
-        business: formData.get('business') || '',
-        email: formData.get('email') || '',
-        message: formData.get('message') || '',
-        timestamp: new Date().toISOString(),
-        source: 'Gravity House Partners Page',
+        first_name: firstName,
+        last_name:  lastName,
+        business:   formData.get('business') || '',
+        email:      formData.get('email')    || '',
+        town:       formData.get('town')     || '',
+        message:    formData.get('message')  || '',
+        timestamp:  new Date().toISOString(),
+        source:     'Gravity House Partners Page',
       };
 
       try {

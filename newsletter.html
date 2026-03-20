@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#141412">
+  <title>Community Updates — Gravity House</title>
+  <meta name="description" content="Follow the journey — construction updates, community news and what's coming at Gravity House, Bega Valley's first climbing gym.">
+  <link rel="canonical" href="https://gravityhouse.vercel.app/newsletter">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gravityhouse.vercel.app/newsletter">
+  <meta property="og:title" content="Community Updates — Gravity House">
+  <meta property="og:description" content="Follow the journey — construction updates, community news and what's coming at Gravity House.">
+  <meta property="og:locale" content="en_AU">
+
+  <!-- Favicons (same as main site) -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@900&family=Outfit:wght@200;300;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Tokens ── */
+    :root {
+      --ink:       #181714;
+      --ink-soft:  rgba(24,23,20,0.45);
+      --orange:    #CE5621;
+      --linen:     #E3DBCE;
+      --linen-lt:  #EFE9DE;
+      --cream:     #FAFAF7;
+      --font-head: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+      --font-body: 'Outfit', Arial, sans-serif;
+    }
+
+    /* ── Base ── */
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--linen);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Site nav ── */
+    .site-nav {
+      background: var(--ink);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid var(--orange);
+    }
+    .nav-logo {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+    .nav-logo span { color: var(--orange); }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(250,250,247,0.45);
+      transition: color 0.15s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--cream); }
+
+    /* ── Page header ── */
+    .page-header {
+      background: var(--ink);
+      padding: 52px 32px 44px;
+      border-bottom: 3px solid var(--orange);
+    }
+    .page-header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .page-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .eyebrow-text {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(250,250,247,0.35);
+    }
+    .page-title {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: clamp(52px, 8vw, 88px);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+    .page-title .dim { color: rgba(250,250,247,0.18); }
+    .page-desc {
+      margin-top: 18px;
+      font-family: var(--font-body);
+      font-weight: 200;
+      font-size: 13px;
+      color: rgba(250,250,247,0.45);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* ── Layout ── */
+    .page-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── Issue list (left panel) ── */
+    .issue-list-panel {
+      position: sticky;
+      top: 72px;
+    }
+    .panel-label {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+    }
+    .issue-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .issue-card {
+      background: var(--cream);
+      border: 1px solid var(--linen);
+      border-radius: 8px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+    .issue-card:hover {
+      border-color: var(--orange);
+      box-shadow: 0 3px 12px rgba(24,23,20,0.08);
+    }
+    .issue-card.active {
+      border-color: var(--orange);
+      background: #FEF5F0;
+      box-shadow: 0 3px 16px rgba(206,86,33,0.12);
+    }
+    .issue-card.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--orange);
+      border-radius: 8px 0 0 8px;
+    }
+    .issue-number {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 4px;
+    }
+    .issue-subject {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-bottom: 5px;
+    }
+    .issue-date {
+      font-family: var(--font-body);
+      font-weight: 200;
+      font-size: 10px;
+      color: var(--ink-soft);
+    }
+    .issue-stats {
+      margin-top: 8px;
+      display: flex;
+      gap: 12px;
+    }
+    .issue-stat {
+      font-family: var(--font-body);
+      font-weight: 200;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .issue-stat strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* Skeleton loaders */
+    .skeleton {
+      background: linear-gradient(90deg, var(--linen-lt) 25%, var(--linen) 50%, var(--linen-lt) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 4px;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .skeleton-card {
+      height: 86px;
+      border-radius: 8px;
+    }
+
+    /* ── Viewer (right panel) ── */
+    .viewer-panel {
+      min-height: 600px;
+    }
+    .viewer-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .viewer-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .viewer-tag {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--cream);
+      padding: 3px 9px;
+      border-radius: 3px;
+    }
+    .viewer-title {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .viewer-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-ghost {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      border: 1px solid var(--linen);
+      background: var(--cream);
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-ghost:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+    }
+    .viewer-frame-wrap {
+      background: var(--cream);
+      border: 1px solid var(--linen);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(24,23,20,0.08);
+    }
+    #newsletter-frame {
+      width: 100%;
+      min-height: 700px;
+      border: none;
+      display: block;
+      background: var(--linen);
+    }
+
+    /* Empty / loading / error states */
+    .viewer-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 480px;
+      background: var(--cream);
+      border: 1px solid var(--linen);
+      border-radius: 10px;
+    }
+    .placeholder-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+      opacity: 0.25;
+    }
+    .placeholder-title {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .placeholder-sub {
+      font-family: var(--font-body);
+      font-weight: 200;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+    .loading-spinner {
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--linen);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin-bottom: 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Error banner ── */
+    .error-banner {
+      background: #FEF2EE;
+      border: 1px solid #F5C4B2;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 12px;
+      color: #8B3A1E;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--ink);
+      padding: 20px 32px;
+      text-align: center;
+      font-family: var(--font-body);
+      font-weight: 200;
+      font-size: 10px;
+      color: rgba(250,250,247,0.28);
+      border-top: 2px solid rgba(250,250,247,0.05);
+    }
+    .site-footer a {
+      color: rgba(250,250,247,0.35);
+      text-decoration: none;
+    }
+    .site-footer a:hover { color: var(--orange); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .page-body {
+        grid-template-columns: 1fr;
+        padding: 24px 16px 60px;
+      }
+      .issue-list-panel {
+        position: static;
+      }
+      .page-header { padding: 36px 16px 32px; }
+      .site-nav { padding: 0 16px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav class="site-nav">
+    <a href="/" class="nav-logo">Gravity<span>House</span></a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/newsletter.html" class="active">Updates</a></li>
+      <li><a href="/partners.html">Partners</a></li>
+      <li><a href="/#join">Join the Community</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Page header ── -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <div class="page-eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span class="eyebrow-text">Gravity House &middot; South Coast Climbing</span>
+      </div>
+      <div class="page-title">
+        Community<br>
+        <span class="dim">Updates.</span>
+      </div>
+      <p class="page-desc">
+        Building in public. Every update we send lands here too — the full journey, from slab pour to opening day.
+      </p>
+    </div>
+  </header>
+
+  <!-- ── Body ── -->
+  <main class="page-body">
+
+    <!-- Left: issue list -->
+    <aside class="issue-list-panel">
+      <p class="panel-label">All issues</p>
+      <div id="error-banner" class="error-banner">
+        Couldn't load newsletters. Check the API is configured correctly.
+      </div>
+      <div id="issue-list" class="issue-list">
+        <!-- Skeleton placeholders while loading -->
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+    </aside>
+
+    <!-- Right: viewer -->
+    <section class="viewer-panel">
+
+      <div id="viewer-toolbar" class="viewer-toolbar" style="display:none;">
+        <div class="viewer-meta">
+          <span class="viewer-tag" id="viewer-tag">Issue</span>
+          <span class="viewer-title" id="viewer-date"></span>
+        </div>
+        <div class="viewer-actions">
+          <a id="btn-open-tab" href="#" target="_blank" class="btn-ghost">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 1H11V5M11 1L5.5 6.5M1 3H4M1 3V11H9V7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Open tab
+          </a>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="viewer-empty" class="viewer-placeholder">
+        <div class="placeholder-icon">✉</div>
+        <div class="placeholder-title">Select an issue</div>
+        <p class="placeholder-sub">Choose a community update from the list to read it here.</p>
+      </div>
+
+      <!-- Loading state -->
+      <div id="viewer-loading" class="viewer-placeholder" style="display:none;">
+        <div class="loading-spinner"></div>
+        <div class="placeholder-title">Loading</div>
+        <p class="placeholder-sub">Fetching this issue…</p>
+      </div>
+
+      <!-- Frame -->
+      <div id="viewer-frame-wrap" class="viewer-frame-wrap" style="display:none;">
+        <iframe id="newsletter-frame" title="Newsletter content" sandbox="allow-same-origin allow-popups"></iframe>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    &copy; 2026 Gravity House Pty Ltd &middot; Kalaru NSW &middot;
+    <a href="/">gravityhouse.com.au</a>
+  </footer>
+
+  <script>
+    // ─── Config ───────────────────────────────────────────────
+    const API_BASE = '/api';          // Vercel serverless functions
+    // ──────────────────────────────────────────────────────────
+
+    const issueListEl    = document.getElementById('issue-list');
+    const errorBanner    = document.getElementById('error-banner');
+    const viewerEmpty    = document.getElementById('viewer-empty');
+    const viewerLoading  = document.getElementById('viewer-loading');
+    const viewerFrameWrap= document.getElementById('viewer-frame-wrap');
+    const viewerToolbar  = document.getElementById('viewer-toolbar');
+    const viewerTag      = document.getElementById('viewer-tag');
+    const viewerDate     = document.getElementById('viewer-date');
+    const frame          = document.getElementById('newsletter-frame');
+    const btnOpenTab     = document.getElementById('btn-open-tab');
+
+    let campaigns = [];
+    let activeId  = null;
+
+    // ─── Helpers ──────────────────────────────────────────────
+
+    function formatDate(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    function extractIssueNumber(name, subject) {
+      // Try to pull "Update #4" / "Issue 4" / "#4" from name or subject
+      const match = (name + ' ' + subject).match(/#\s*(\d+)/i);
+      return match ? `Issue #${match[1]}` : 'Issue';
+    }
+
+    function sanitiseNewsletterHtml(html) {
+      // Replace Brevo merge tags with sensible defaults for web display
+      return html
+        .replace(/\{\{\s*contact\.FIRSTNAME\s*\|?\s*default\(['"](.+?)['"]\)\s*\}\}/gi, '$1')
+        .replace(/\{\{\s*contact\.\w+\s*\}\}/gi, '')
+        // Remove unsubscribe / mirror footer rows — email-only cruft
+        .replace(/\{unsubscribe\}/gi, '#')
+        .replace(/\{mirror\}/gi, window.location.href);
+    }
+
+    // ─── Render issue list ─────────────────────────────────────
+
+    function renderIssueList(items) {
+      issueListEl.innerHTML = '';
+      if (!items.length) {
+        issueListEl.innerHTML = '<p style="font-size:12px;color:var(--ink-soft);">No sent campaigns found.</p>';
+        return;
+      }
+      items.forEach((c, idx) => {
+        const issueNum  = extractIssueNumber(c.name || '', c.subject || '');
+        const issueDate = formatDate(c.sentDate || c.scheduledAt);
+        const openRate  = c.statistics?.globalStats?.uniqueOpens
+          ? Math.round((c.statistics.globalStats.uniqueOpens / c.statistics.globalStats.recipients) * 100) + '%'
+          : null;
+
+        const card = document.createElement('div');
+        card.className = 'issue-card';
+        card.dataset.id = c.id;
+        card.innerHTML = `
+          <div class="issue-number">${issueNum}</div>
+          <div class="issue-subject">${c.subject || c.name || 'Untitled'}</div>
+          <div class="issue-date">${issueDate}</div>
+          ${openRate ? `<div class="issue-stats"><span class="issue-stat"><strong>${openRate}</strong> open rate</span></div>` : ''}
+        `;
+        card.addEventListener('click', () => loadCampaign(c));
+        issueListEl.appendChild(card);
+
+        // Auto-load the first one
+        if (idx === 0) loadCampaign(c);
+      });
+    }
+
+    // ─── Load campaign content into viewer ────────────────────
+
+    async function loadCampaign(campaign) {
+      if (activeId === campaign.id) return;
+      activeId = campaign.id;
+
+      // Update active card styling
+      document.querySelectorAll('.issue-card').forEach(el => {
+        el.classList.toggle('active', el.dataset.id == campaign.id);
+      });
+
+      // Show loading
+      viewerEmpty.style.display     = 'none';
+      viewerFrameWrap.style.display = 'none';
+      viewerToolbar.style.display   = 'none';
+      viewerLoading.style.display   = 'flex';
+
+      try {
+        const res  = await fetch(`${API_BASE}/newsletter-content?id=${campaign.id}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        const html = sanitiseNewsletterHtml(data.htmlContent || '');
+
+        // Write into sandboxed iframe
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        doc.open();
+        doc.write(html);
+        doc.close();
+
+        // Resize iframe to content height after render
+        setTimeout(() => {
+          try {
+            const h = doc.body ? doc.body.scrollHeight : 700;
+            frame.style.minHeight = Math.max(h + 40, 700) + 'px';
+          } catch(e) { /* cross-origin fallback */ }
+        }, 200);
+
+        // Update toolbar
+        const issueNum = extractIssueNumber(campaign.name || '', campaign.subject || '');
+        viewerTag.textContent  = issueNum;
+        viewerDate.textContent = formatDate(campaign.sentDate || campaign.scheduledAt);
+        btnOpenTab.href        = `/api/newsletter-content?id=${campaign.id}&format=html`;
+
+        // Show content
+        viewerLoading.style.display   = 'none';
+        viewerFrameWrap.style.display = 'block';
+        viewerToolbar.style.display   = 'flex';
+
+      } catch (err) {
+        console.error('Failed to load campaign:', err);
+        viewerLoading.style.display = 'none';
+        viewerEmpty.style.display   = 'flex';
+        viewerEmpty.querySelector('.placeholder-title').textContent = 'Failed to load';
+        viewerEmpty.querySelector('.placeholder-sub').textContent   = err.message;
+      }
+    }
+
+    // ─── Bootstrap: fetch campaign list ───────────────────────
+
+    async function init() {
+      try {
+        const res = await fetch(`${API_BASE}/newsletters`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        campaigns  = (data.campaigns || []).filter(c => c.status === 'sent');
+        renderIssueList(campaigns);
+      } catch (err) {
+        console.error('Failed to fetch campaigns:', err);
+        issueListEl.innerHTML = '';
+        errorBanner.style.display = 'block';
+        errorBanner.textContent   = `Couldn't load newsletters: ${err.message}`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
